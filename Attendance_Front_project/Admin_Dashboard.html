@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        /* General Page Styles */
+        body {
+            background: linear-gradient(#fff, #6042e3);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #000;
+            font-family: sans-serif;
+            font-weight: 700;
+        }
+
+        /* Container for the dashboard */
+        .dashboard-container {
+            background: rgba(0, 0, 0,0);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0,0);
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Glowing Button styles */
+        .button-47 {
+            align-items: center;
+            background: #FFFFFF;
+            border: 0 solid #E2E8F0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            box-sizing: border-box;
+            color: #1A202C;
+            display: inline-flex;
+            font-family: Inter, sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            height: 56px;
+            justify-content: center;
+            line-height: 24px;
+            overflow-wrap: break-word;
+            padding: 24px;
+            text-decoration: none;
+            width: auto;
+            border-radius: 8px;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+        /* Form styles */
+        form {
+            margin-top: 20px;
+        }
+
+        p {
+            color: #000;
+            font-family: sans-serif;
+        }
+
+        hr {
+            border: 1px solid #ccc;
+            margin: 20px 0;
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Admin Dashboard</h1>
+        <h2>Pending Check-In Requests</h2>
+        
+        <?php if ($result->num_rows > 0) : ?>
+            <?php while ($row = $result->fetch_assoc()) : ?>
+                <form method="POST" action="admin_approval.php">
+                    <input type="hidden" name="request_id" value="<?php echo $row['id']; ?>">
+                    <p>Employee ID: <?php echo $row['employee_id']; ?></p>
+                    <p>Request Time: <?php echo $row['request_time']; ?></p>
+                    <p>Description: <?php echo $row['description']; ?></p>
+                    <button class="button-47" type="submit" name="action" value="approve">Approve</button>
+                    <button class="button-47" type="submit" name="action" value="reject">Reject</button>
+                    <hr>
+                </form>
+            <?php endwhile; ?>
+        <?php else : ?>
+            <p>No pending requests.</p>
+        <?php endif; ?>
+        
+        <br>
+        <a href="admin_logout.php" class="button-47" role="button">Logout</a>
+    </div>
+</body>
+</html>
